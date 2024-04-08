@@ -1,0 +1,8 @@
+{
+  "Carrots (1kg)": ["Express Delivery", "Click&Collect"],
+  "Cold Beer (330ml)": ["Express Delivery"],
+  "Steak (300g)": ["Express Delivery", "Click&Collect"],
+  "AA Battery (4 Pcs.)": ["Express Delivery", "Courier"],
+  "Espresso Machine": ["Courier", "Click&Collect"],
+  "Garden Chair": ["Courier"]
+}
