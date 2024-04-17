@@ -2,10 +2,14 @@ import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -14,7 +18,6 @@ public class BasketSplitterTest extends TestCase {
     class Basket1 {
         private final String absolutePathToConfig = new File("resources/config.json").getAbsolutePath();
         private Map<String, List<String>> result;
-        private Map<String, List<String>> correctSplit = new HashMap<>();
 
         @BeforeEach
         public void init() {
@@ -48,8 +51,8 @@ public class BasketSplitterTest extends TestCase {
         @Test
         public void testIfSplitISCorrect(){
             String path = new File("resources/answers/result-1.json").getAbsolutePath();
-            correctSplit = Utils.readItemsMapFromJsonFile(path);
-            assertTrue(correctSplit.equals(result));
+            Map<String, List<String>> correctSplit = Utils.readItemsMapFromJsonFile(path);
+            assertEquals(correctSplit, result);
         }
     }
 
@@ -57,7 +60,6 @@ public class BasketSplitterTest extends TestCase {
     class Basket2 {
         private final String absolutePathToConfig = new File("resources/config.json").getAbsolutePath();
         private Map<String, List<String>> result;
-        private Map<String, List<String>> correctSplit = new HashMap<>();
 
         @BeforeEach
         public void init() {
@@ -91,7 +93,7 @@ public class BasketSplitterTest extends TestCase {
         @Test
         public void testIfSplitISCorrect(){
             String path = new File("resources/answers/result-2.json").getAbsolutePath();
-            correctSplit = Utils.readItemsMapFromJsonFile(path);
+            Map<String, List<String>> correctSplit = Utils.readItemsMapFromJsonFile(path);
             assertTrue(Utils.compareTwoMaps(correctSplit, result));
         }
 
@@ -100,7 +102,6 @@ public class BasketSplitterTest extends TestCase {
     class Basket3 {
         private final String absolutePathToConfig = new File("resources/config1.json").getAbsolutePath();
         private Map<String, List<String>> result;
-        private Map<String, List<String>> correctSplit = new HashMap<>();
 
         @BeforeEach
         public void init() {
@@ -134,7 +135,7 @@ public class BasketSplitterTest extends TestCase {
         @Test
         public void testIfSplitISCorrect(){
             String path = new File("resources/answers/result-3.json").getAbsolutePath();
-            correctSplit = Utils.readItemsMapFromJsonFile(path);
+            Map<String, List<String>> correctSplit = Utils.readItemsMapFromJsonFile(path);
             System.out.println(correctSplit);
             System.out.println(result);
             assertTrue(Utils.compareTwoMaps(correctSplit, result));
@@ -142,15 +143,12 @@ public class BasketSplitterTest extends TestCase {
     }
     @Test
     public void testCanItemBeDeliveredByCompany() {
-        List<String> items = Utils.readItemsFromJsonFile(new File("resources/basket-1.json").getAbsolutePath());
-        String absolutePathToConfig = new File("resources/config.json").getAbsolutePath();
-        BasketSplitter basketSplitter = new BasketSplitter(absolutePathToConfig);
         Map<String, List<String>> deliveryConfigMap = new HashMap<>();
         deliveryConfigMap.put("Item1", Arrays.asList("Company1", "Company2"));
-        deliveryConfigMap.put("Item2", Arrays.asList("Company3"));
+        deliveryConfigMap.put("Item2", List.of("Company3"));
 
         try {
-            Class cls = SplitAlgorithm.class;
+            Class<SplitAlgorithm> cls = SplitAlgorithm.class;
             Method method = cls.getDeclaredMethod("canItemBeDeliveredByCompany", Map.class, String.class, String.class);
             method.setAccessible(true);
 
@@ -180,7 +178,7 @@ public class BasketSplitterTest extends TestCase {
             Map<String, List<String>> deliveryConfigMap = (Map<String, List<String>>) field.get(basketSplitter);
             Map<String, List<String>> correctSplit = Utils.readItemsMapFromJsonFile(jsonFilePath);
 
-            assertTrue(deliveryConfigMap.equals(correctSplit));
+            assertEquals(deliveryConfigMap, correctSplit);
 
         } catch (Exception e) {
             fail("An exception occurred while reading the existing file: " + e.getMessage());
