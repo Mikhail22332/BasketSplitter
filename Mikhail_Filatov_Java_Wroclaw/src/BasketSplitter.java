@@ -68,8 +68,7 @@ public class BasketSplitter {
                 }
             }
         } catch (NullPointerException e) {
-            // Handle the NullPointerException gracefully
-            e.printStackTrace(); // Or handle it as per your application's requirements
+            e.printStackTrace();
         }
         return deliveryPool;
     }
