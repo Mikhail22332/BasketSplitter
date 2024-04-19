@@ -1,4 +1,4 @@
-Basket Splitting
+#Basket Splitting
 	Basket Splitting is a library designed to optimize the delivery process for an online supermarket. It aims to divide the items in a customer's shopping cart into delivery groups to minimize the number of required deliveries. By considering factors such as item size, delivery method availability, and customer preferences, the library ensures efficient and cost-effective delivery operations. It utilizes a configuration file to determine available delivery methods for each product and provides an API for seamless integration into existing systems. With Basket Splitting, online supermarkets can streamline their delivery processes and enhance customer satisfaction.
 
 Dependencies
